@@ -1,12 +1,8 @@
-import { test, expect } from '@playwright/test';
-import { HttpClient } from '@clients/http-client';
-import { BookingService } from '@services';
+import { test, expect } from '@fixtures';
 import { BookingRequest, CreateBookingResponse } from '@models';
 
 test.describe('Booking - create', () => {
-  test('POST /booking creates a booking and returns it with an id', async ({ request }) => {
-    const bookingService = new BookingService(new HttpClient(request));
-
+  test('POST /booking creates a booking and returns it with an id', async ({ bookingService }) => {
     const newBooking: BookingRequest = {
       firstname: 'Jim',
       lastname: 'Brown',
