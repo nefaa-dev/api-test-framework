@@ -10,13 +10,18 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "paths": {
-      "@config/*": ["./src/config/*"],
-      "@clients/*": ["./src/clients/*"],
-      "@services/*": ["./src/services/*"],
-      "@models/*": ["./src/models/*"],
-      "@builders/*": ["./src/builders/*"],
-      "@fixtures/*": ["./src/fixtures/*"],
-      "@utils/*": ["./src/utils/*"]
+       "@config": ["./src/config/index.ts"],
+       "@config/*": ["./src/config/*"],
+       "@clients/*": ["./src/clients/*"],
+       "@services": ["./src/services/index.ts"],
+       "@services/*": ["./src/services/*"],
+       "@models": ["./src/models/index.ts"],
+       "@models/*": ["./src/models/*"],
+       "@builders": ["./src/builders/index.ts"],
+       "@builders/*": ["./src/builders/*"],
+       "@fixtures": ["./src/fixtures/index.ts"],
+       "@fixtures/*": ["./src/fixtures/*"],
+       "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src", "tests", "playwright.config.ts"]
