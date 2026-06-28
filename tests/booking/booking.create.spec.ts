@@ -1,6 +1,7 @@
 import { aBooking } from '@builders';
 import { test, expect } from '@fixtures';
-import { BookingRequest, CreateBookingResponse } from '@models';
+import { createBookingResponseSchema } from '@models';
+import { validateSchema } from '@utils/schema-validator';
 
 test.describe('Booking - create', () => {
   test('POST /booking creates a booking and returns it with an id', async ({ bookingService }) => {
@@ -9,8 +10,8 @@ test.describe('Booking - create', () => {
     const response = await bookingService.create(newBooking);
 
     expect(response.status()).toBe(200);
-    const created = (await response.json()) as CreateBookingResponse;
+    const created = validateSchema(createBookingResponseSchema, await response.json());
     expect(created.bookingid).toBeGreaterThan(0);
-    expect(created.booking.firstname).toBe(newBooking.firstname);
+    expect(created.booking.firstname).toBe('Jim');
   });
 });

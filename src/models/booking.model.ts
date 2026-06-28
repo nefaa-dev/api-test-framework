@@ -1,25 +1,31 @@
-export interface BookingDates {
-    checkin: string;
-    checkout: string;
-}
+import { z } from 'zod';
 
-/** The payload we SEND to create or replace a booking. */
-export interface BookingRequest {
-    firstname: string;
-    lastname: string;
-    totalprice: number;
-    depositpaid: boolean;
-    bookingdates: BookingDates;
-    additionalneeds?: string;
-}
+export const bookingDatesSchema = z.object({
+    checkin: z.string(),
+    checkout: z.string(),
+});
 
-/** A single id entry returned by GET /booking (the list endpoint). */
-export interface BookingId {
-    bookingid: number;
-}
+export const bookingRequestSchema = z.object({
+    firstname: z.string(),
+    lastname: z.string(),
+    totalprice: z.number(),
+    depositpaid: z.boolean(),
+    bookingdates: bookingDatesSchema,
+    additionalneeds: z.string().optional(),
+});
 
-/** The response from POST /booking - the server wraps our booking and adds an id. */
-export interface CreateBookingResponse {
-    bookingid: number;
-    booking: BookingRequest;
-}
+export const bookingIdSchema = z.object({
+  bookingid: z.number(),
+});
+
+export const bookingListSchema = z.array(bookingIdSchema);
+
+export const createBookingResponseSchema = z.object({
+  bookingid: z.number(),
+  booking: bookingRequestSchema,
+});
+
+export type BookingDates = z.infer<typeof bookingDatesSchema>;
+export type BookingRequest = z.infer<typeof bookingRequestSchema>;
+export type BookingId = z.infer<typeof bookingIdSchema>;
+export type CreateBookingResponse = z.infer<typeof createBookingResponseSchema>;
