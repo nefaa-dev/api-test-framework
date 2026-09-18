@@ -20,5 +20,29 @@ export class BookingService extends BaseService {
         return this.client.post(this.url(), { data: booking});
     }
 
+    async update(id: number, booking: BookingRequest, token: string): Promise<APIResponse> {
+        return this.client.put((this.url(`/${id}`)), {
+            data: booking,
+            headers: { Cookie: `token=${token}`},
+        });
+    }
+
+    async partialUpdate(
+        id: number,
+        changes: Partial<BookingRequest>,
+        token: string,
+    ): Promise<APIResponse>{
+        return this.client.patch((this.url(`/${id}`)), {
+             data: changes,
+             headers: { Cookie: `token=${token}`},
+        });
+    }
+
+    async delete(id: number, token: string): Promise<APIResponse> {
+        return this.client.delete((this.url(`/${id}`)), {
+            headers: { Cookie: `token=${token}`},
+        });
+    }
+
 
 }
