@@ -20,7 +20,7 @@ test.describe('Booking - read', () => {
         
         const response = await bookingService.getById(created.bookingid);
 
-        expect(response.status()).toBe(200);
+        await expect(response).toHaveStatus(200);
         const booking = validateSchema(bookingRequestSchema, await response.json());
         expect(booking.firstname).toBe('Marie');
 

@@ -63,5 +63,3 @@ export const test = base.extend<ServiceFixtures>({
     }
     },
 });
-
-export { expect } from '@playwright/test';

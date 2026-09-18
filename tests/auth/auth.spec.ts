@@ -7,7 +7,7 @@ test.describe('Auth', () => {
     test('POST /auth returns a token for valid credentials', async ({ authService }) => {
         const response = await authService.generateToken(config.credentials);
 
-        expect(response.status()).toBe(200);
+        await expect(response).toHaveStatus(200);
         const body = validateSchema(authResponseSchema, await response.json());
         expect(body.token).toBeTruthy();
     })

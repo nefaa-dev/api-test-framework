@@ -16,6 +16,6 @@ test.describe('Booking - delete', () => {
     expect(deleteResponse.status()).toBe(201); // restful-booker's quirky delete status
 
     const getResponse = await bookingService.getById(created.bookingid);
-    expect(getResponse.status()).toBe(404);
+    await expect(getResponse).toHaveStatus(404);
   });
 });

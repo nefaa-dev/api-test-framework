@@ -30,7 +30,7 @@ test.describe('Booking - update', () => {
 
     const response = await bookingService.partialUpdate(bookingid, { firstname: 'Grace' }, authToken);
 
-    expect(response.status()).toBe(200);
+    await expect(response).toHaveStatus(200);
     const body = validateSchema(bookingRequestSchema, await response.json());
     expect(body.firstname).toBe('Grace');
     expect(body.lastname).toBe(booking.lastname); // untouched field preserved
@@ -44,6 +44,6 @@ test.describe('Booking - update', () => {
 
     const response = await bookingService.update(bookingid, aBooking().build(), 'not-a-real-token');
 
-    expect(response.status()).toBe(403);
+    await expect(response).toHaveStatus(403);
   });
 });

@@ -30,14 +30,17 @@ export class HttpClient {
     return this.send('DELETE', endpoint, () => this.request.delete(endpoint, options));
   }
    
+  
   private async send(
-    method: string,
-    endpoint: string,
-    call: () => Promise<APIResponse>,
-   ): Promise<APIResponse> {
-    logger.info(`→ ${method} ${endpoint}`);
-    const response = await call();
-    logger.info(`← ${method} ${endpoint} ${response.status()}`);
-    return response;
-   }
+     method: string,
+     endpoint: string,
+     call: () => Promise<APIResponse>,
+  ): Promise<APIResponse> {
+   const start = Date.now();
+   logger.debug(`→ ${method} ${endpoint}`);
+   const response = await call();
+   const elapsed = Date.now() - start;
+   logger.info(`${method} ${endpoint} → ${response.status()} (${elapsed}ms)`);
+   return response;
+  }
 }
