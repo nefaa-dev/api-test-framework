@@ -28,7 +28,11 @@ test.describe('Booking - update', () => {
   }) => {
     const { bookingid, booking } = await bookingFactory.create();
 
-    const response = await bookingService.partialUpdate(bookingid, { firstname: 'Grace' }, authToken);
+    const response = await bookingService.partialUpdate(
+      bookingid,
+      { firstname: 'Grace' },
+      authToken,
+    );
 
     await expect(response).toHaveStatus(200);
     const body = validateSchema(bookingRequestSchema, await response.json());

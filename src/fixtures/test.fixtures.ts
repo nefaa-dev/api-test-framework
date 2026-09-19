@@ -4,46 +4,45 @@ import { AuthService, BookingService } from '@services';
 import { aBooking } from '@builders';
 import { config } from '@config';
 import {
-    authResponseSchema,
-    createBookingResponseSchema,
-    BookingRequest,
-    CreateBookingResponse,
+  authResponseSchema,
+  createBookingResponseSchema,
+  BookingRequest,
+  CreateBookingResponse,
 } from '@models';
 import { validateSchema } from '@utils/schema-validator';
 
 export interface BookingFactory {
-    create: (booking?: BookingRequest) => Promise<CreateBookingResponse>;
+  create: (booking?: BookingRequest) => Promise<CreateBookingResponse>;
 }
 
-
 export interface ServiceFixtures {
-    httpClient: HttpClient;
-    authService: AuthService;
-    bookingService: BookingService;
-    authToken: string;
-    bookingFactory: BookingFactory;
+  httpClient: HttpClient;
+  authService: AuthService;
+  bookingService: BookingService;
+  authToken: string;
+  bookingFactory: BookingFactory;
 }
 
 export const test = base.extend<ServiceFixtures>({
-    httpClient: async ({ request }, use) => {
-        await use(new HttpClient(request));
-    },
-    
-    authService: async ({ httpClient }, use) => {
-        await use(new AuthService(httpClient));
-    },
+  httpClient: async ({ request }, use) => {
+    await use(new HttpClient(request));
+  },
 
-    bookingService: async ({ httpClient }, use) => {
-        await use(new BookingService(httpClient));
-    },
+  authService: async ({ httpClient }, use) => {
+    await use(new AuthService(httpClient));
+  },
 
-    authToken: async ({ authService }, use) => {
+  bookingService: async ({ httpClient }, use) => {
+    await use(new BookingService(httpClient));
+  },
+
+  authToken: async ({ authService }, use) => {
     const response = await authService.generateToken(config.credentials);
     const { token } = validateSchema(authResponseSchema, await response.json());
     await use(token);
-    },
+  },
 
-    bookingFactory: async ({ bookingService, authToken }, use) => {
+  bookingFactory: async ({ bookingService, authToken }, use) => {
     const createdIds: number[] = [];
 
     const create = async (
@@ -61,5 +60,5 @@ export const test = base.extend<ServiceFixtures>({
     for (const id of createdIds.reverse()) {
       await bookingService.delete(id, authToken);
     }
-    },
+  },
 });

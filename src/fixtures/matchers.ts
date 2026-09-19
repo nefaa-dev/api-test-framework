@@ -10,8 +10,7 @@ export const expect = baseExpect.extend({
     const body = await response.text();
     return {
       pass,
-      message: () =>
-        `Expected status ${expected} but received ${actual}\nResponse body:\n${body}`,
+      message: () => `Expected status ${expected} but received ${actual}\nResponse body:\n${body}`,
     };
   },
 });

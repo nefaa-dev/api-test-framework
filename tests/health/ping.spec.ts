@@ -1,5 +1,5 @@
 import { HttpClient } from '@clients/http-client';
-import { test, expect} from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.describe('Health check', () => {
   test('GET /ping should return 201 Created', { tag: '@smoke' }, async ({ request }) => {
@@ -8,7 +8,5 @@ test.describe('Health check', () => {
 
     expect(response.status()).toBe(201);
     expect(await response.text()).toContain('Created');
-  })
-
-
-})
+  });
+});
