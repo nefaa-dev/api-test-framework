@@ -1,6 +1,6 @@
 import { test, expect } from '@fixtures';
 import { config } from '@config';
-import { AuthResponse, authResponseSchema } from '@models';
+import { authResponseSchema } from '@models';
 import { validateSchema } from '@utils/schema-validator';
 
 test.describe('Auth', () => {

@@ -16,7 +16,7 @@ export const expect = baseExpect.extend({
 });
 
 declare module '@playwright/test' {
-  interface Matchers<R, T> {
+  interface Matchers<R> {
     toHaveStatus(expected: number): Promise<R>;
   }
 }

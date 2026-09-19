@@ -1,5 +1,5 @@
 import { HttpClient } from '@clients/http-client';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures';
 
 test.describe('Health check', () => {
   test('GET /ping should return 201 Created', { tag: '@smoke' }, async ({ request }) => {
