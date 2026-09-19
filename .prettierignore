@@ -1,0 +1,1 @@
+printf "node_modules\nplaywright-report\ntest-results\ndist\n" > .prettierignore
