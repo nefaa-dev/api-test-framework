@@ -1,1 +1,4 @@
-printf "node_modules\nplaywright-report\ntest-results\ndist\n" > .prettierignore
+node_modules
+playwright-report
+test-results
+dist
