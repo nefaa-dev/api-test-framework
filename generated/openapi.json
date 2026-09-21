@@ -1,0 +1,262 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Restful Booker — consumer contract",
+    "version": "1.0.0",
+    "description": "Generated from the zod schemas in src/models. Do not edit by hand."
+  },
+  "servers": [
+    {
+      "url": "https://restful-booker.herokuapp.com"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AuthRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "additionalProperties": false
+      },
+      "BookingRequest": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "totalprice": {
+            "type": "number"
+          },
+          "depositpaid": {
+            "type": "boolean"
+          },
+          "bookingdates": {
+            "type": "object",
+            "properties": {
+              "checkin": {
+                "type": "string"
+              },
+              "checkout": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "checkin",
+              "checkout"
+            ],
+            "additionalProperties": false
+          },
+          "additionalneeds": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "firstname",
+          "lastname",
+          "totalprice",
+          "depositpaid",
+          "bookingdates"
+        ],
+        "additionalProperties": false
+      },
+      "BookingId": {
+        "type": "object",
+        "properties": {
+          "bookingid": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "bookingid"
+        ],
+        "additionalProperties": false
+      },
+      "CreateBookingResponse": {
+        "type": "object",
+        "properties": {
+          "bookingid": {
+            "type": "number"
+          },
+          "booking": {
+            "type": "object",
+            "properties": {
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "totalprice": {
+                "type": "number"
+              },
+              "depositpaid": {
+                "type": "boolean"
+              },
+              "bookingdates": {
+                "type": "object",
+                "properties": {
+                  "checkin": {
+                    "type": "string"
+                  },
+                  "checkout": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "checkin",
+                  "checkout"
+                ],
+                "additionalProperties": false
+              },
+              "additionalneeds": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "firstname",
+              "lastname",
+              "totalprice",
+              "depositpaid",
+              "bookingdates"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "bookingid",
+          "booking"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "paths": {
+    "/auth": {
+      "post": {
+        "summary": "Create an auth token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking": {
+      "get": {
+        "summary": "List booking ids",
+        "responses": {
+          "200": {
+            "description": "Array of booking ids",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a booking",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking/{id}": {
+      "get": {
+        "summary": "Get a booking by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The booking",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      }
+    }
+  }
+}

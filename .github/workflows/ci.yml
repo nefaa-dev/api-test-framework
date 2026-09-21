@@ -23,6 +23,10 @@ jobs:
 
       - name: Type check
         run: npm run typecheck
+      - name: Verify OpenAPI contract is up to date
+        run: |
+          npm run generate:openapi
+          git diff --exit-code generated/openapi.json
 
       - name: Run API tests
         run: npm test
