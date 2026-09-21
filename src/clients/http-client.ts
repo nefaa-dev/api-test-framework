@@ -1,5 +1,6 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
 import { logger } from '@utils/logger';
+import { recordTiming } from '@utils/response-timing';
 
 export interface RequestOptions {
   headers?: Record<string, string>;
@@ -31,15 +32,16 @@ export class HttpClient {
   }
 
   private async send(
-    method: string,
-    endpoint: string,
-    call: () => Promise<APIResponse>,
-  ): Promise<APIResponse> {
-    const start = Date.now();
-    logger.debug(`→ ${method} ${endpoint}`);
-    const response = await call();
-    const elapsed = Date.now() - start;
-    logger.info(`${method} ${endpoint} → ${response.status()} (${elapsed}ms)`);
-    return response;
+  method: string,
+  endpoint: string,
+  call: () => Promise<APIResponse>,
+): Promise<APIResponse> {
+  const start = Date.now();
+  logger.debug(`→ ${method} ${endpoint}`);
+  const response = await call();
+  const elapsed = Date.now() - start;
+  recordTiming(response, elapsed);
+  logger.info(`${method} ${endpoint} → ${response.status()} (${elapsed}ms)`);
+  return response;
   }
 }
